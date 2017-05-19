@@ -1,4 +1,4 @@
-# Team best-of-the-rest
+# Team Best-of-the-REST
 
 Contestant repository for [Hackathonovo by IN2](http://hackathonovo.in2.hr/) competition
 
