@@ -4,7 +4,7 @@
 <div
   *ngIf="viewMode"
   class="panel panel-default">
-  <div class="panel-heading">Detalji / <a [routerLink]="['/action', act.id, 'edit']">Uredi podatke</a></div>
+  <div class="panel-heading"><a [routerLink]="['/action', act.id]">Detalji</a> / <a [routerLink]="['/action', act.id, 'edit']">Uredi podatke</a></div>
   <div class="panel-body">
     <h3>{{ act.heading }}</h3>
     <strong>Opis akcije</strong>

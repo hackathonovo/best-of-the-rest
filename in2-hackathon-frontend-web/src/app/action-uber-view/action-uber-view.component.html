@@ -14,10 +14,13 @@
     </sebm-google-map-marker>
   </sebm-google-map>
 
+  <br />
+
   <div *ngIf="loaded" class="panel panel-primary">
     <div class="panel-heading">Poruke</div>
     <div class="panel-body">
-      <div *ngFor="let msg of actionDetails.messages" class="row well-sm"></div>
+      <div *ngFor="let msg of actionDetails.messages" class="row well-sm">{{ msg.messageText }} <span class="pull-right">
+        <label class="label label-info">{{msg.messageType}}</label></span></div>
     </div>
   </div>
 
