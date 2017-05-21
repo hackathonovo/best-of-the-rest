@@ -1,0 +1,148 @@
+<div class="container">
+  <h2 *ngIf="!editMode">Novi korisnik</h2>
+  <h2 *ngIf="editMode">{{ model.firstName + ' ' + model.lastName }}</h2>
+  <hr/>
+  <div class="row">
+    <div class="col-md-6">
+      <form #newUserForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="ime">Ime</label>
+          <input type="text" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" class="form-control"
+                 id="ime" placeholder="Unesite ime">
+        </div>
+        <div class="form-group">
+          <label for="prezime">Prezime</label>
+          <input type="text" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" class="form-control"
+                 id="prezime" placeholder="Unesite prezime">
+        </div>
+        <div class="form-group">
+          <label for="email">Email adresa</label>
+          <input type="text" name="email" [(ngModel)]="model.email" #email="ngModel" class="form-control" id="email"
+                 placeholder="Unesite email">
+        </div>
+        <div class="form-group">
+          <label for="contact">Kontakt</label>
+          <input type="text" name="contact" [(ngModel)]="model.contact" #contact="ngModel" class="form-control"
+                 id="contact" placeholder="Unesite kontakt broj">
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="dOd">Dostupan od</label>
+              <select class="form-control" id="dOd" name="availableFrom" [(ngModel)]="model.availableFrom">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+                <option>21</option>
+                <option>22</option>
+                <option>23</option>
+                <option>24</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="dDo">Dostupan do</label>
+              <select class="form-control" name="availableTo" [(ngModel)]="model.availableTo" #availableTo="ngModel"
+                      id="dDo">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+                <option>21</option>
+                <option>22</option>
+                <option>23</option>
+                <option>24</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <strong>Kuća</strong>
+          <sebm-google-map (mapClick)="onHomeMapClick($event)" [latitude]="45.815399" [longitude]="15.966568">
+            <sebm-google-map-marker [latitude]="homeLocLat" [longitude]="homeLocLng">
+            </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+        <div class="form-group">
+          <strong>Posao</strong>
+          <sebm-google-map (mapClick)="onWorkMapClick($event)" [latitude]="45.815399" [longitude]="15.966568">
+            <sebm-google-map-marker [latitude]="workLocLat" [longitude]="workLocLng">
+            </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+        <div class="form-group">
+          <label for="kat">Kategorija</label>
+          <select class="form-control" name="category" #category="ngModel" id="kat" [(ngModel)]="model.category">
+            <option value="INTERN" [selected]="model.category === 'INTERN'">PRIPRAVNIK</option>
+            <option value="RESCUER" [selected]="model.category === 'RESCUER'">SPAŠAVATELJ</option>
+            <option value="INSTRUCTOR" [selected]="model.category === 'INSTRUCTOR'">INSTRUKTOR</option>
+          </select>
+        </div>
+
+        <strong>Dodaj funkcionalnost</strong>
+        <div class="row">
+          <div class="col-md-4">
+            <select id="allSpec" class="form-control" name="specName" [(ngModel)]="idSpec">
+              <option *ngFor="let s of allSpecialities" [value]="s.id">{{s.name}}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <select id="razina" class="form-control" name="specLevel" [(ngModel)]="specLevel">
+              <option value="1" selected="selected">1</option>
+              <option *ngFor="let i of [2, 3, 4, 5]">{{ i }}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-default" type="button" (click)="onAddSpeciality()"
+                    [disabled]="!specLevel || !idSpec">Dodaj
+            </button>
+            <button class="btn btn-default" type="button" (click)="onClear()">Očisti</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="kat">Specijalnosti korisnika</label>
+            <div *ngFor="let s of specialities" class="list-group-item">{{ getSpeciality(s.id) }} {{s.level}}</div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

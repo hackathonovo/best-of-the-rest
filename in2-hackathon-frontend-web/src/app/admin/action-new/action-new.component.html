@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="col-md-6">
+    <h2 *ngIf="!editMode">Stvaranje nove akcije</h2>
+    <h2 *ngIf="editMode">{{ model.heading }}</h2>
+    <form #newActionForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <div class="checkbox-inline">
+            <label><input name="isSearch" type="checkbox" [(ngModel)]="isSearch">POTRAGA ( DA / NE )</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="emr">Hitnost:</label>
+          <select name="urgency" class="form-control" id="emr" [(ngModel)]="model.urgency" >
+            <option value="LOW">NISKA</option>
+            <option value="MEDIUM">SREDNJA</option>
+            <option value="HIGH">VISOKA</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ime akcije: </label>
+          <input name="heading" class="form-control" [(ngModel)]="model.heading" placeholder="Ime">
+        </div>
+        <div class="form-group">
+          <label>Opis akcije: </label>
+          <textarea name="description" class="form-control" rows="3" [(ngModel)]="model.description" placeholder="Opis"></textarea>
+        </div>
+        <div class="form-group">
+          <label *ngIf="!isSearch">Lokacija akcije:</label>
+          <label *ngIf="isSearch">Zadnje poznato mjesto:</label>
+          <sebm-google-map (mapClick)="onClick($event)" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+            <sebm-google-map-marker  [latitude]="model.actionLocationX" [longitude]="model.actionLocationY " [label]="'S'">
+            </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+        <div *ngIf="isSearch" class="form-group">
+          <div class="form-group">
+            <label>Vrijeme okupljanja:</label>
+            <input
+              name="meetingTime"
+              [(ngModel)]="model.meetingTime"
+              ng2-datetime-picker="true" />
+
+          </div>
+          <label>Randevous:</label>
+          <sebm-google-map (mapClick)="onClickBase($event)" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+            <sebm-google-map-marker  [latitude]="model.baseLocationX" [longitude]="model.baseLocationY " [label]="'B'">
+            </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+
+      <h4>Korisnici</h4>
+      <hr />
+      <div class="row">
+        <div class="col-md-3">
+          <label for="kat">Kategorija</label>
+          <select id="kat" class="form-control" name="category" [(ngModel)]="category">
+            <option value="INTERN">PRIPRAVNIK</option>
+            <option value="RESCUER">SPAŠAVATELJ</option>
+            <option value="INSTRUCTOR">INSTRUKTOR</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="raz">Razina</label>
+          <select id="raz" class="form-control" name="level" [(ngModel)]="level">
+            <option value="1" selected="selected">1</option>
+            <option *ngFor="let i of [2, 3, 4, 5]">{{ i }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="raz">Specijalnost</label>
+          <select id="allSpec" class="form-control" name="specName" [(ngModel)]="speciality">
+            <option *ngFor="let s of allSpecialities" [value]="s.name">{{s.name}}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <br />
+          <button type="button" class="btn btn-sm btn-success" (click)="onFilter()">
+            Filtriraj
+          </button>
+          <button class="btn btn-sm btn-default" (click)="onClearFilter()" type="button">Očisti</button>
+        </div>
+      </div>
+
+      <br />
+      <div class="row">
+        <div *ngFor="let usr of users" class="list-group-item">{{ usr.firstName }} {{ usr.lastName }}</div>
+      </div>
+
+      <br />
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+

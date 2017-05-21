@@ -1,0 +1,37 @@
+<li class="list-group-item">
+  <a (click)="changeViewMode()">{{ act.heading}}</a>
+  <span class="pull-right"><label class="label label-default">{{act.status}}</label></span></li>
+<div
+  *ngIf="viewMode"
+  class="panel panel-default">
+  <div class="panel-heading">Detalji / <a [routerLink]="['/action', act.id, 'edit']">Uredi podatke</a></div>
+  <div class="panel-body">
+    <h3>{{ act.heading }}</h3>
+    <strong>Opis akcije</strong>
+    <p>{{act.description}}</p>
+
+    <div class="row">
+      <div class="col-md-4">
+        <strong>Karta</strong>
+        <sebm-google-map [latitude]="act.actionLocationX" [longitude]="act.actionLocationY">
+          <sebm-google-map-marker [latitude]="act.actionLocationX" [longitude]="act.actionLocationY" [label]="S">
+          </sebm-google-map-marker>
+          <sebm-google-map-marker *ngIf="act.type === 'SEARCH'" [latitude]="act.baseLocationX" [longitude]="act.baseLocationY" [label]="B">
+          </sebm-google-map-marker>
+        </sebm-google-map>
+      </div>
+      <div class="col-md-4">
+        <strong>Vrijeme</strong>
+        <p>{{act.meetingTime * 1000 | date:'medium'}}</p>
+        <strong>Vrsta akcije</strong>
+        <p><label class="label label-warning"></label></p>
+        <strong>Hitnost</strong>
+        <p><label class="label label-danger">{{act.urgency}}</label></p>
+        <strong>Status</strong>
+        <p><label class="label label-info">{{act.status}}</label></p>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="container">
+  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="panel-title">Sign In</div>
+      </div>
+
+      <div style="padding-top:30px" class="panel-body">
+
+        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="form-horizontal">
+
+          <div style="margin-bottom: 25px" class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="login-email" type="email" class="form-control" name="email" value=""
+                   placeholder="Email" [(ngModel)]="model.email" name="email" #email="ngModel" required
+                   pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+          </div>
+          <div [hidden]="email.valid || email.untouched"
+               class="alert alert-danger validation-field">
+            <span>Email is required</span>
+          </div>
+
+          <div style="margin-bottom: 25px" class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="login-password" type="password" class="form-control" name="password" placeholder="Password"
+                   [(ngModel)]="model.password" name="password" required #password="ngModel"
+                   pattern="^[a-zA-Z0-9_.+-]{6,30}$">
+          </div>
+          <div [hidden]="password.valid || password.untouched"
+               class="alert alert-danger validation-field">
+            <span>Password is required and must be between 6 and 30 letters or numbers.</span>
+          </div>
+
+          <div style="margin-top:10px" class="form-group">
+            <!-- Button -->
+
+            <div class="col-sm-12 controls">
+              <button type="button" class="btn btn-success" (click)="onSubmit()" [disabled]="!loginForm.form.valid">
+                Submit
+              </button>
+              <button type="button" class="btn btn-default" (click)="loginForm.reset()">Reset</button>
+            </div>
+          </div>
+          <div *ngIf="errorMessage" id="alert-message">
+            <!--<ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>-->
+            <div class="alert alert-danger alert-dismissable fade in">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              Error message</div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

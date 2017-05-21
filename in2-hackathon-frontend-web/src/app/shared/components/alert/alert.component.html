@@ -1,0 +1,8 @@
+<div
+  id="alertComponent"
+  *ngIf="message" style="position: fixed; top: 60px; right: 1%; left: 70%; z-index: 9999"
+  class="alert-dismissable fade in alert-fixed"
+  [ngClass]="{'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  {{message.text}}
+</div>

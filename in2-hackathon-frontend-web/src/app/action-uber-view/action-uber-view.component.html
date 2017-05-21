@@ -1,0 +1,75 @@
+<div class="container">
+  <h2 *ngIf="heading"> Detalji akcije: <strong>{{ actionDetails.action.heading }}</strong></h2>
+  <hr/>
+
+  <strong>Karta akcije</strong>
+  <sebm-google-map *ngIf="loaded" [latitude]="actionDetails.action.actionLocationX"
+                   [longitude]="actionDetails.action.actionLocationY">
+    <sebm-google-map-marker [latitude]="actionDetails.action.actionLocationX"
+                            [longitude]="actionDetails.action.actionLocationY" [label]="Akcija">
+    </sebm-google-map-marker>
+    <sebm-google-map-marker *ngIf="actionDetails.action.actionType === 'SEARCH'"
+                            [latitude]="actionDetails.action.baseLocationX"
+                            [longitude]="actionDetails.action.baseLocationY" [label]="B">
+    </sebm-google-map-marker>
+  </sebm-google-map>
+
+  <div *ngIf="loaded" class="panel panel-primary">
+    <div class="panel-heading">Poruke</div>
+    <div class="panel-body">
+      <div *ngFor="let msg of actionDetails.messages" class="row well-sm"></div>
+    </div>
+  </div>
+
+  <h3>Aktivni korisnici</h3>
+  <hr/>
+  <div *ngIf="loaded" class="row">
+    <div *ngFor="let actUsr of actionDetails.users" class="list-group-item">{{ actUsr.firstName }} {{ actUsr.lastName
+      }}
+    </div>
+  </div>
+
+  <br/>
+  <br/>
+  <div class="panel panel-info">
+    <div class="panel-heading">Dodatni korisnici</div>
+    <div class="panel-body">
+      <div class="row well">
+        <div class="col-md-3">
+          <label for="kat">Kategorija</label>
+          <select id="kat" class="form-control" name="category" [(ngModel)]="category">
+            <option value="INTERN">PRIPRAVNIK</option>
+            <option value="RESCUER">SPAŠAVATELJ</option>
+            <option value="INSTRUCTOR">INSTRUKTOR</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="raz">Razina</label>
+          <select id="raz" class="form-control" name="level" [(ngModel)]="level">
+            <option value="1" selected="selected">1</option>
+            <option *ngFor="let i of [2, 3, 4, 5]">{{ i }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="raz">Specijalnost</label>
+          <select id="allSpec" class="form-control" name="specName" [(ngModel)]="speciality">
+            <option *ngFor="let s of allSpecialities" [value]="s.name">{{s.name}}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <br/>
+          <button type="button" class="btn btn-sm btn-success" (click)="onFilter()">
+            Filtriraj
+          </button>
+          <button class="btn btn-sm btn-default" (click)="onClearFilter()" type="button">Očisti</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div *ngFor="let usr of users" class="list-group-item">{{ usr.firstName }} {{ usr.lastName }}</div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

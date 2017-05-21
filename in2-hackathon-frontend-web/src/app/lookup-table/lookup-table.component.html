@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>Šifrarnik - Specijalnost</h2>
+  <ul class="list-group" >
+    <li class="list-group-item" *ngFor="let spec of allSpecialities">
+      <label>{{spec.name}}</label>
+      <button (click)="removeSpeciality(spec.id)" type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </li>
+  </ul>
+  <div class="form-group">
+    <strong>Ime specijalnosti: </strong>
+    <input name="name" class="form-control" [(ngModel)]="spec.name" placeholder="Ime">
+    <button (click)="addSpeciality()" type="button" class="btn btn-primary">Spremi</button>
+  </div>
+</div>

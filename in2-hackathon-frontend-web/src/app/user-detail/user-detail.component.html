@@ -1,0 +1,36 @@
+<li class="list-group-item"><a (click)="changeViewMode()">{{ usr.firstName + ' ' + usr.lastName }}</a></li>
+<div
+  *ngIf="viewMode"
+  class="panel panel-default">
+  <div class="panel-heading">Detalji / <a [routerLink]="['/admin', 'users', usr.id, 'edit']">Uredi podatke</a></div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-4">
+        <p><label class="label label-primary">{{usr.category}}</label></p>
+        <strong>Ime i prezime</strong>
+        <p>{{ usr.firstName + ' ' + usr.lastName }}</p>
+        <strong>Kontakt</strong>
+        <p>{{usr.contact}}</p>
+        <span *ngIf="usr.email"><strong>E-mail adresa</strong><p>{{usr.email}}</p></span>
+        <strong>Dostupnost</strong>
+        <p>{{usr.availableFrom * 1000 | date}} - {{usr.availableTo * 1000 | date}}</p>
+          <p><label *ngFor="let s of specialities" class="label label-success">{{ s.name }}</label></p>
+      </div>
+      <div class="col-md-4">
+        <strong>Kuća</strong>
+        <sebm-google-map [latitude]="usr.homeLocationX" [longitude]="usr.homeLocationY">
+          <sebm-google-map-marker [latitude]="usr.homeLocationX" [longitude]="usr.homeLocationY">
+          </sebm-google-map-marker>
+        </sebm-google-map>
+      </div>
+      <div class="col-md-4">
+        <strong>Posao</strong>
+        <sebm-google-map [latitude]="usr.workLocationX" [longitude]="usr.workLocationY">
+          <sebm-google-map-marker [latitude]="usr.workLocationX" [longitude]="usr.workLocationY">
+          </sebm-google-map-marker>
+        </sebm-google-map>
+      </div>
+    </div>
+
+  </div>
+</div>
